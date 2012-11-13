@@ -10,6 +10,7 @@ using BOTF.Infrastructure;
 using System.Threading;
 using WebMatrix.WebData;
 using BOTF.Filters;
+using System.Data.Spatial;
 /*This controller takes care of the propopsals functionality*/
 namespace BOTF.Controllers
 {
@@ -163,7 +164,7 @@ namespace BOTF.Controllers
        /*This function takes care of the vote button*/
         // PUT api/proposal/5
        [Authorize]
-        public HttpResponseMessage Put(int Id)
+        public HttpResponseMessage Put([FromUri]int Id, [FromUri]double latitude =0, [FromUri]double longitude = 0)
         {
             var response = new HttpResponseMessage(HttpStatusCode.OK);
             Models.User user = _db.User.FirstOrDefault(c => c.UserId == WebSecurity.CurrentUserId);
@@ -176,7 +177,20 @@ namespace BOTF.Controllers
             proposal.Votes++;
        
             _db.SaveChanges();
-            _db.VoteHistory.Add(new VoteHistory { ProposalId = proposal.Id, UserId = WebSecurity.CurrentUserId });
+            if (latitude != 0&& longitude != 0)
+            {
+
+                string point = String.Format("POINT({0} {1})",longitude, latitude);
+                
+               
+                _db.VoteHistory.Add(new VoteHistory { ProposalId = proposal.Id, UserId = WebSecurity.CurrentUserId, Coordinates=DbGeography.FromText(point) });
+            }
+            else
+            {
+                _db.VoteHistory.Add(new VoteHistory { ProposalId = proposal.Id, UserId = WebSecurity.CurrentUserId });
+
+            }
+          
            
             user.RemainingVotes--;
             _db.SaveChanges();

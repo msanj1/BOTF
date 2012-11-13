@@ -265,13 +265,15 @@
 
             });
 
-          
+       
             GetFriends();
             GetSliderContents();
             SelectTenRecentProposals();
             GetRecentVoters();
             GetRecentPicks();
             handleScroll();
+         
+            
             var proposalHistory = $("#History_template").html();
             ProposalsTemplate = Handlebars.compile(proposalHistory);
             var voteHistory = $("#VoteHistory_template").html();
@@ -881,6 +883,9 @@
         } else {
             window.attachEvent('onscroll', handleScroll);
         };
+
+      
+
         //functions end
   
         

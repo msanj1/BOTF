@@ -24,8 +24,9 @@
     <img  src='@Model.Image' class="img-rounded"  height="400px" width="400px" />
     <div id="bio">
         <p>@Html.Raw(Model.Biography)</p>
+         <div id="Map" style="width:100%; height:100%"></div>
     </div>
-
+   
 
     <h4 style="color: Gray;">@Model.Genre</h4>
 
@@ -55,6 +56,7 @@
             <div id="updates" style="display: none;"></div>
             
          <div id="Rankings"></div>
+        
       
         }
        
@@ -64,8 +66,11 @@
     {
      @Scripts.Render("~/Scripts/bootstrap.min.js")
       @Scripts.Render("~/Scripts/jquery.timeago.js")
- 
       @Scripts.Render("~/Scripts/jquery.signalR-0.5.3.min.js")
+    @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyCIs9qpUFOiHVjK3jUwdrRLONtd8TU6ZP0&sensor=false")
+    @Scripts.Render("http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js")
+
+   
    <script src="~/signalr/hubs" type="text/javascript"></script>
     <pre style="display:inline-block; height:10px"></pre>
     <script  id="CommentsHistory" type="text/x-handlebars-template">
@@ -128,8 +133,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-          
-           
+            
           
             var commentsDropdown = $("#CommentsHistory").html();
             comments = Handlebars.compile(commentsDropdown);
@@ -140,7 +144,11 @@
             GetRankings();
             GetSimilarProposals();
             updateComments();
-            
+            RenderMap();
+           
+            @if (WebSecurity.IsAuthenticated) {
+               <Text> getLocation();</text>
+            }
             //Twitter
             var settings = {
     
@@ -192,11 +200,14 @@
                 GetRankings();
             }
             $('#ProposalDetailVote').click(function () {
+                console.log(latitude);
+                console.log(longitude);
                 //console.log($(this).parent().find('span'));
                 var $container = $(this).parent().parent().find('span').eq(0);
                 console.log( $(this).attr('data-proposalid'));
                 $.ajax({
-                    url: '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Proposals" })' + '/' + $(this).attr('data-proposalid'),
+                    url: '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Proposals" })' +'?Id='+$(this).attr('data-proposalid') + '&latitude='+latitude + '&longitude='+longitude ,
+                 
                     type: "PUT",
                     complete: function (response) {
                         if (response.status == 200) {
@@ -511,7 +522,61 @@
 
                   }
             });
-         }
+        }
+
+       
+
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(savePosition);
+            } else {
+                console.log("Geolocation is not supported in this browser");
+            }
+        }
+        var longitude;
+        var latitude;
+        function savePosition(position) {
+           
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+          
+        }
+ 
+        function RenderMap(){
+            var mapOptions = {
+                center: new google.maps.LatLng(-36.397, 135.644),
+                zoom: 3,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            };
+            var map = new google.maps.Map(document.getElementById("Map"),
+                mapOptions);
+          
+            $.ajax({
+                url: '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Map" })' + '/' + @Model.Id,
+                  
+                 type: "GET",
+                 success: function (data) {
+              
+                     var Markers = [];
+                     for (var i = 0; i < data.$values.length; i++) {
+                         console.log(data.$values[i].longitude);
+                         var latLng = new google.maps.LatLng(data.$values[i].latitude,data.$values[i].longitude);
+                         var marker = new google.maps.Marker({
+                             position: latLng,
+                             draggable: true
+                         });
+                         Markers.push(marker);
+                     }
+                     var mcOptions = {gridSize: 100, maxZoom: 10};
+                     var mc = new MarkerClusterer(map, Markers,mcOptions);
+                     
+                    
+                    
+                 }
+
+             });
+        }
         
      
         //end functions

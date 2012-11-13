@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Data.Spatial;
+
 namespace BOTF.Models
 {
    public class VoteHistory
@@ -12,5 +14,6 @@ namespace BOTF.Models
         public virtual int Id { get; set; }
         public virtual int UserId { get; set; }
         public virtual int ProposalId { get; set; }
+        public DbGeography Coordinates { get; set; }
     }
 }

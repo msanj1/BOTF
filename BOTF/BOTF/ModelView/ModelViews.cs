@@ -150,7 +150,12 @@ namespace BOTF.ModelView
           public int Id { get; set; }
           public bool List { get; set; }
       }
-    
+
+      public class VotersMapCoordinates
+      {
+          public double latitude { get; set; }
+          public double longitude { get; set; }
+      }
 
 
 

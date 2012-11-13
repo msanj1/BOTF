@@ -29,6 +29,7 @@ namespace BOTF.Controllers
                 //get user's info
                user = new ModelView.User { Id = userinfo.Id, Email = userinfo.Email, Name = userinfo.Name, Image = userinfo.Image, RemainingProposals = userinfo.RemainingProposals, RemainingVotes = userinfo.RemainingVotes };
             }
+            
 
             ViewBag.Filter = Filter; //viewbag for filtering
             return View(user);
@@ -108,6 +109,10 @@ namespace BOTF.Controllers
             List<string> Genres =  _db.Proposal.Select(c => c.Genre).Distinct().ToList();
             return Json(Genres,JsonRequestBehavior.AllowGet);
         }
+
+        
+
+       
     }
 
 

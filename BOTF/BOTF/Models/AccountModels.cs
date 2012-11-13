@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
-
+using System.ComponentModel.DataAnnotations;
 using System.Web;
-using System.Web.Mvc;
+
 using BOTF.Models;
 namespace BOTF.Models
 {
@@ -56,6 +56,7 @@ namespace BOTF.Models
 
         [DataType(DataType.Password)]
         [Display(Name = "Confirm new password")]
+  
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
     }
