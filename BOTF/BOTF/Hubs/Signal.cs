@@ -20,5 +20,9 @@ namespace BOTF.Hubs
         {
             Clients.updateRanks();
         }
+
+        public void UpdateCoordinates(int Id) {
+            Clients.getNewCoordinate(Id);
+        }
     }
 }

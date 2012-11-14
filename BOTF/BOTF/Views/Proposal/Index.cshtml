@@ -24,12 +24,13 @@
     <img  src='@Model.Image' class="img-rounded"  height="400px" width="400px" />
     <div id="bio">
         <p>@Html.Raw(Model.Biography)</p>
-         <div id="Map" style="width:100%; height:100%"></div>
+        <div id="Rankings"></div>
+      
     </div>
    
 
     <h4 style="color: Gray;">@Model.Genre</h4>
-
+    
     @{
         if (WebSecurity.IsAuthenticated)
         {
@@ -40,6 +41,7 @@
            
            
          <div class ="row">
+       
             <div class="span2"></div>
             <div class="span8">
                  <input id="CommentInput" type="text"></input>
@@ -55,8 +57,8 @@
            
             <div id="updates" style="display: none;"></div>
             
-         <div id="Rankings"></div>
-        
+         
+         <div id="Map" style="width:100%; height:500px"></div>
       
         }
        
@@ -146,7 +148,8 @@
             updateComments();
             RenderMap();
            
-            @if (WebSecurity.IsAuthenticated) {
+            @if (WebSecurity.IsAuthenticated)
+            {
                <Text> getLocation();</text>
             }
             //Twitter
@@ -198,6 +201,7 @@
             }
             connection.updateRanks = function(){
                 GetRankings();
+                CreateCluster();
             }
             $('#ProposalDetailVote').click(function () {
                 console.log(latitude);
@@ -542,40 +546,48 @@
             longitude = position.coords.longitude;
           
         }
- 
+        var Markers;
+        var map;
+        
+
         function RenderMap(){
             var mapOptions = {
-                center: new google.maps.LatLng(-36.397, 135.644),
-                zoom: 3,
+                center: new google.maps.LatLng(-26.397, 135.644),
+                zoom: 5,
                 mapTypeId: google.maps.MapTypeId.ROADMAP
             };
-            var map = new google.maps.Map(document.getElementById("Map"),
+            map = new google.maps.Map(document.getElementById("Map"),
                 mapOptions);
+            CreateCluster();
           
+        }
+
+        function CreateCluster(){
+            Markers = [];
             $.ajax({
                 url: '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Map" })' + '/' + @Model.Id,
                   
-                 type: "GET",
-                 success: function (data) {
+                type: "GET",
+                success: function (data) {
               
-                     var Markers = [];
-                     for (var i = 0; i < data.$values.length; i++) {
-                         console.log(data.$values[i].longitude);
-                         var latLng = new google.maps.LatLng(data.$values[i].latitude,data.$values[i].longitude);
-                         var marker = new google.maps.Marker({
-                             position: latLng,
-                             draggable: true
-                         });
-                         Markers.push(marker);
-                     }
-                     var mcOptions = {gridSize: 100, maxZoom: 10};
-                     var mc = new MarkerClusterer(map, Markers,mcOptions);
+                    
+                    for (var i = 0; i < data.$values.length; i++) {
+                        console.log(data.$values[i].longitude);
+                        var latLng = new google.maps.LatLng(data.$values[i].latitude,data.$values[i].longitude);
+                        var marker = new google.maps.Marker({
+                            position: latLng,
+                            draggable: true
+                        });
+                        Markers.push(marker);
+                    }
+                    
+                    var mc = new MarkerClusterer(map, Markers);
                      
                     
                     
-                 }
+                }
 
-             });
+            });
         }
         
      

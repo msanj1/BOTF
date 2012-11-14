@@ -175,7 +175,7 @@ namespace BOTF.Controllers
                 Proposal proposal = _db.Proposal.FirstOrDefault(c=>c.Id == Id);
 
             proposal.Votes++;
-       
+          
             _db.SaveChanges();
             if (latitude != 0&& longitude != 0)
             {
@@ -183,7 +183,8 @@ namespace BOTF.Controllers
                 string point = String.Format("POINT({0} {1})",longitude, latitude);
                 
                
-                _db.VoteHistory.Add(new VoteHistory { ProposalId = proposal.Id, UserId = WebSecurity.CurrentUserId, Coordinates=DbGeography.FromText(point) });
+               _db.VoteHistory.Add(new VoteHistory { ProposalId = proposal.Id, UserId = WebSecurity.CurrentUserId, Coordinates=DbGeography.FromText(point) });
+              
             }
             else
             {
@@ -193,13 +194,14 @@ namespace BOTF.Controllers
           
            
             user.RemainingVotes--;
-            _db.SaveChanges();
+             _db.SaveChanges();
             int currentVotes = proposal.Votes;
 
             if (currentVotes != 0 && ((currentVotes % 10) == 0))
             {
                 response.Headers.Location = new Uri(Request.RequestUri, "/api/FacebookProposal?Id=" + proposal.Id + "&ArtistPost=" + true); //artist post if a vote reaches 10
             }
+         
             return response;
 
         }
