@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Spatial;
 namespace BOTF.Models
 {
 
@@ -24,6 +25,7 @@ namespace BOTF.Models
         public virtual string Genre { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual int ProposedBy { get; set; }
+        public  DbGeography VenueCoordinates { get; set; }
     }
 
 

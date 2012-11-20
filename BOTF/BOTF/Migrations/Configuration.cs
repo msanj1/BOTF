@@ -18,8 +18,8 @@ namespace BOTF.Migrations
         protected override void Seed(BOTF.Infrastructure.ContextDb context)
         {
 
-            WebSecurity.InitializeDatabaseConnection("DefaultConnection",
-            "UserProfile", "UserId", "UserName", autoCreateTables: true);
+            //WebSecurity.InitializeDatabaseConnection("DefaultConnection",
+            //"UserProfile", "UserId", "UserName", autoCreateTables: true);
             /*Create an admin user the first tip code migration is run*/
             var roles = (SimpleRoleProvider)Roles.Provider;
             var membership = (SimpleMembershipProvider)Membership.Provider;

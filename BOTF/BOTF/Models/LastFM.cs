@@ -8,9 +8,16 @@ using System.IO;
 using System.Xml;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Web.Script.Serialization;
 
 namespace BOTF.Models
 {
+    public class LastFMVenue
+    {
+        public string Latitude { get; set; }
+        public string Longitude { get; set; }
+    }
+
     public class LastFM
     {
 
@@ -49,6 +56,31 @@ namespace BOTF.Models
             var xdoc = XDocument.Load(new StringReader(xml));
             var names = xdoc.Descendants("artist").Elements("similar").Elements("artist").Elements("name").Select(r => r.Value).Take(5).ToList();
             return names;
+        }
+
+        public LastFMVenue GetVeneuGeo(string venue)
+        {
+            //string URL = host + "?method=venue.search&venue=" + venue + "&api_key=" + apiKey + "&format=json&limit=1";
+            string URL = "http://maps.googleapis.com/maps/api/geocode/json?address=" + venue + "&sensor=false";
+            var client = new WebClient();
+            string json =  client.DownloadString(URL);
+            JavaScriptSerializer jss = new JavaScriptSerializer();
+            var data =  jss.Deserialize<dynamic>(json);
+            if (data["status"] == "OK")
+            {
+                var tmp = data["results"];
+
+                tmp = tmp[0]["geometry"];
+                tmp = tmp["location"];
+                string latitude = tmp["lat"].ToString();
+                string longitude = tmp["lng"].ToString();
+                return new LastFMVenue { Latitude = latitude, Longitude = longitude };
+            }
+
+            return new LastFMVenue { };
+            
+          
+                
         }
 
         public dynamic GetArtistInfo( string artistName)

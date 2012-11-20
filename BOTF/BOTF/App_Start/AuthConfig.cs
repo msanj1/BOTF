@@ -30,8 +30,8 @@ namespace BOTF
             
 
             /*Facebook/Twitter callback Configuration*/
-            Settings.Settings.TwitterCallbackURL = "http://botf.azurewebsites.net/Account/TwitterCallback";
-            Settings.Settings.FacebookCallbackURL = "http://botf.azurewebsites.net/Account/FBAuth";
+            Settings.Settings.TwitterCallbackURL = "http://btf.azurewebsites.net/Account/TwitterCallback";
+            Settings.Settings.FacebookCallbackURL = "http://btf.azurewebsites.net/Account/FBAuth";
 
             /*LastFM Configuration*/
             Settings.Settings.LastFMKey = "637768bd3e08f631449bea2f1e28bf72";

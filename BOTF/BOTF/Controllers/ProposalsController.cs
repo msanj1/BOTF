@@ -58,6 +58,18 @@ namespace BOTF.Controllers
 
             return voters;
         }
+
+       public List<Proposal> Get([FromUri]string latitude, [FromUri]string longitude)
+       {
+            string point = String.Format("POINT({0} {1})", longitude, latitude);
+    
+            var output = _db.Proposal.Where(c => c.VenueCoordinates != null).OrderBy(c => c.VenueCoordinates.Distance(DbGeography.FromText(point))).Take(15).ToList();
+            return output;
+               
+
+       }
+
+
        /*This function is used to display the top12 and the rest part of the homepage*/
         // GET api/proposal/5
        public List<ViewProposals> Get([FromUri]int count, [FromUri]int skip, [FromUri]string Filter, [FromUri]bool State)
@@ -111,15 +123,32 @@ namespace BOTF.Controllers
                  {
                      
                      dynamic ArtistData = lastfm.GetArtistInfo(proposal.artist); //grab data from LastFM
+                     var venue_geo = lastfm.GetVeneuGeo(proposal.venue);
+                     string point = "";
+                     if (venue_geo.Latitude != null && venue_geo.Longitude != null )
+                     {
+                          point = String.Format("POINT({0} {1})", venue_geo.Longitude, venue_geo.Latitude);
+
+                     }
+                    
+
                      Models.User u = _db.User.FirstOrDefault(c=>c.UserId == WebSecurity.CurrentUserId);
                      if (u.RemainingProposals <= 0)
                      {
                              return  Request.CreateResponse(HttpStatusCode.Forbidden); //check if user can propose a new proposal or not
                      }
+                     Proposal temp;
+                     if (point != "")
+                     {
+                         temp = new Proposal { Artist = ArtistData.ArtistName, Biography = ArtistData.ArtistBio, Genre = ArtistData.MusicGenre, Image = ArtistData.PictureURL, Venue = proposal.venue, Votes = 0, ProposedBy = WebSecurity.CurrentUserId, VenueCoordinates = DbGeography.FromText(point) };
 
-                  
+                     }
+                     else
+                     {
+                         temp = new Proposal { Artist = ArtistData.ArtistName, Biography = ArtistData.ArtistBio, Genre = ArtistData.MusicGenre, Image = ArtistData.PictureURL, Venue = proposal.venue, Votes = 0, ProposedBy = WebSecurity.CurrentUserId };
+
+                     }
                      
-                     Proposal temp = new Proposal { Artist = ArtistData.ArtistName, Biography = ArtistData.ArtistBio, Genre = ArtistData.MusicGenre, Image = ArtistData.PictureURL, Venue = proposal.venue, Votes = 0, ProposedBy = WebSecurity.CurrentUserId };
                      var DatabaseIntegrityCHK = _db.Proposal.FirstOrDefault(c => c.Venue == temp.Venue && c.Artist == temp.Artist);
                      if (DatabaseIntegrityCHK != null) //check if a similar proposal exists
                      {

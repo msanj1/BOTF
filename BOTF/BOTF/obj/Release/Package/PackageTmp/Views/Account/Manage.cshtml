@@ -127,6 +127,7 @@ else
                     statusCode: {
                         200: function () {
                             console.log("Vote was unvoted Successfully");
+                            GetUsersVoteHistory();
                         },
                         304: function () {
                             console.log("Vote was not unvoted");

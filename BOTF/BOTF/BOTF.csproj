@@ -62,6 +62,10 @@
       <HintPath>..\packages\TweetSharp.2.2.1\lib\4.0\Hammock.ClientProfile.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.SqlServer.Types, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.SqlServer.Types.10.50.1600.1\lib\Net20\Microsoft.SqlServer.Types.dll</HintPath>
+    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\TweetSharp.2.2.1\lib\4.0\Newtonsoft.Json.dll</HintPath>
@@ -248,6 +252,7 @@
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Content\images\no-icon.jpg" />
     <Content Include="Content\images\twitter-bird-light-bgs.png" />
+    <Content Include="Content\media-queries.css" />
     <Content Include="Content\styles2.css" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
@@ -307,8 +312,6 @@
     <Content Include="Global.asax" />
     <Content Include="App_Readme\Handlebarsjs_README.md" />
     <Content Include="App_Readme\Handlebarsjs_LICENSE" />
-    <None Include="Properties\PublishProfiles\botf - FTP %2810%29.pubxml" />
-    <None Include="Properties\PublishProfiles\botf - FTP %2811%29.pubxml" />
     <None Include="Properties\PublishProfiles\botf - FTP %2812%29.pubxml" />
     <None Include="Properties\PublishProfiles\Botf - FTP %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\botf - FTP %283%29.pubxml" />
@@ -331,6 +334,8 @@
     <None Include="Properties\PublishProfiles\botf - Web Deploy %288%29.pubxml" />
     <None Include="Properties\PublishProfiles\botf - Web Deploy %289%29.pubxml" />
     <None Include="Properties\PublishProfiles\Botf - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\btf - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\btf - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\boostrap-typeahead.js" />
     <Content Include="Scripts\bootstrap.js" />

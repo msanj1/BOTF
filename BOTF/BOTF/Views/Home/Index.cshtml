@@ -24,9 +24,9 @@
                         @{
                             if (Model.Name != null)
                             {
-                            <li><a data-toggle="modal" data-target="#myModal">Invite TT Friends</a></li>
+                            <li><a id="tt-friends" data-toggle="modal" data-target="#myModal">Invite TT Friends</a></li>
                             <div id="numberofvotes">@Model.RemainingVotes</div>
-                             <li> <a  onclick="sendRequestInvite()">Invite FB Friends</a></li>
+                             <li> <a id="ff-friends" onclick="sendRequestInvite()">Invite FB Friends</a></li>
                             } 
                         }
                       
@@ -73,6 +73,8 @@
    @Scripts.Render("~/Scripts/jquery.infinitescroll.min.js")
   @Scripts.Render("~/Scripts/boostrap-typeahead.js")
   @Scripts.Render("~/Scripts/jquery.signalR-0.5.3.min.js")
+   @Styles.Render("~/Content/media-queries.css")
+   
  <script type="text/javascript" src="@Url.Content("~/signalr/hubs")"></script>
  
     <script  id="History_template" type="text/x-handlebars-template">
@@ -96,6 +98,37 @@
            <div>Votes: <span id="sVotes-{{Id}}">{{Votes}}</span></div>
            <div id="votenumber" style="display: none;">{{Votes}}</div>
            <div>Proposed By: <a href="/Profile/Index/{{ProposedBy}}">{{Owner}} </a></div>
+        
+          
+        </div>
+        
+        {{/each}}
+        
+    </script>
+
+    <script  id="NearMe_template" type="text/x-handlebars-template">
+       
+      
+        {{#each Histories.$values}} 
+           
+        <div  id= "proposals" >
+
+          <a href= '@Url.Content("~/Proposal/Index?Id={{Id}}")' style="margin:0px;padding:0px;"> <img  href='@Url.Content("~/Proposals/Index?Id={{Id}}")' id = "proposalimage"src='{{Image}}'/>  </a>
+       
+         
+          <div id="clear"></div>
+           <div>{{Artist}} @@ {{Venue}}</div>
+          {{#each Comments}}
+           
+           <div style="color:Blue;">{{this}} </div>
+           
+          {{/each}}
+           <div id = "clear"></div>
+
+
+           <div>Votes: <span id="sVotes-{{Id}}">{{Votes}}</span></div>
+           <div id="votenumber" style="display: none;">{{Votes}}</div>
+          
         
           
         </div>
@@ -272,7 +305,7 @@
             GetRecentVoters();
             GetRecentPicks();
             handleScroll();
-         
+            getLocation();
             
             var proposalHistory = $("#History_template").html();
             ProposalsTemplate = Handlebars.compile(proposalHistory);
@@ -288,6 +321,9 @@
             Invite = Handlebars.compile(FriendsInvite);
             var Genres = $("#Genres").html();
             genres = Handlebars.compile(Genres);
+            var NearMe = $("#NearMe_template").html();
+            Near = Handlebars.compile(NearMe);
+            //NearMe_template
             //singalR
             var connection = $.connection.messagesHub;
             connection.updateVoters = function () {
@@ -837,6 +873,8 @@
 
         }
 
+       
+
         function handleScroll() {
 
             // check that this is a relatively modern browser
@@ -884,7 +922,56 @@
             window.attachEvent('onscroll', handleScroll);
         };
 
-      
+        var longitude;
+        var latitude;
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(savePosition);
+            } else {
+                console.log("Geolocation is not supported in this browser");
+            }
+        }
+       
+        function savePosition(position) {
+          
+            latitude = position.coords.latitude;
+            longitude = position.coords.longitude;
+            if (latitude != '' && longitude != '') {
+                GetNearMeProposals();
+            }
+            
+        }
+
+        function GetNearMeProposals() {
+           
+            $.ajax({
+                url: '@Url.RouteUrl("DefaultApi", new { httproute = "", controller = "Proposals" })' + '?latitude=' + latitude + '&longitude=' + longitude,
+
+                type: "GET",
+                success: function (data) {
+                   
+                    
+                    console.log(Near({ Histories: data }));
+                    //$('#NearMe').isotope('destroy');
+                    $('#NearMe').html(Near({ Histories: data }));
+                    $('#NearMe>#proposals').css({ 'width': '228px','height':'280px'});
+
+                    $('#NearMe').isotope({
+                        itemSelector: '#proposals',
+                        masonry: {
+                            columnWidth: 12
+
+                        }
+                       
+
+                    });
+                 
+                    $('#NearMe>#proposals').find('#proposalimage').css({ 'width': '220px', 'height': '220px', ' margin-bottom': '5px' });
+
+                }
+
+            });
+        }
 
         //functions end
   
@@ -928,19 +1015,20 @@
            
            
               <div id="clear"></div>
-            <h4>Friends<h6>Need to have external login</h6></h4>
+            <h5><i class="icon-search  icon-bell"></i>Friends<h6>Need to have external login</h6></h5>
              <div id="friends"></div>
           
-                    <h4>Top 12</h4>
+                    <h5><i class="icon-search  icon-star"></i>Top 12</h5>
                     <div id="AllProposals"></div>
             <div class="row">
                 <div class="span12">
-                    
-                  
-                    <h4>Staff Picks</h4>
+                    <h5><i class="icon-search  icon-globe"></i>Near Me</h5>
+                    <div id="NearMe"></div>
+                    <div id="clear"></div>
+                    <h5><i class="icon-search   icon-th-list"></i>Staff Picks</h5>
                     <div id="Picks"></div>
                     <div id="clear"></div>
-                    <h4>The rest</h4>
+                    <h5><i class="icon-search   icon-th"></i>The rest</h5>
                     <div id="Rest"></div>
 
                 </div>

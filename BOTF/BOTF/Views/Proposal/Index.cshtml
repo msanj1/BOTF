@@ -71,10 +71,10 @@
       @Scripts.Render("~/Scripts/jquery.signalR-0.5.3.min.js")
     @Scripts.Render("https://maps.googleapis.com/maps/api/js?key=AIzaSyCIs9qpUFOiHVjK3jUwdrRLONtd8TU6ZP0&sensor=false")
     @Scripts.Render("http://google-maps-utility-library-v3.googlecode.com/svn/trunk/markerclusterer/src/markerclusterer.js")
-
-   
+    @Styles.Render("~/Content/media-queries.css")
+  
    <script src="~/signalr/hubs" type="text/javascript"></script>
-    <pre style="display:inline-block; height:10px"></pre>
+
     <script  id="CommentsHistory" type="text/x-handlebars-template">
       
         {{#each Comments.$values}}
@@ -146,12 +146,9 @@
             GetRankings();
             GetSimilarProposals();
             updateComments();
-            RenderMap();
+          
            
-            @if (WebSecurity.IsAuthenticated)
-            {
-               <Text> getLocation();</text>
-            }
+          
             //Twitter
             var settings = {
     
@@ -163,8 +160,7 @@
       
       
     
-        };
-
+            };
             (function($) {
 
                 $.fn.tweetButton = function(options) {
@@ -191,8 +187,16 @@
 
             })(jQuery);
             //End Twitter
-
             $('#twitterButton').tweetButton();
+           
+
+              @if (WebSecurity.IsAuthenticated)
+            {
+                  
+               <Text> getLocation(); RenderMap();</text>
+                  
+            }
+       
             var TwitterURLReferrer ="";
             GetURLReferrer();
             var connection = $.connection.messagesHub;
@@ -528,7 +532,7 @@
             });
         }
 
-       
+        
 
 
         function getLocation() {

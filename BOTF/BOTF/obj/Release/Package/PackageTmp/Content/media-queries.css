@@ -1,0 +1,27 @@
+﻿@media screen and (max-width:980px) {
+    a#button.accordion-toggle {
+        display:none;
+    }
+
+    #commentinput {
+        display: none;
+    }
+
+    #comment {
+        display:none;
+    }
+
+    #tt-friends {
+         display:none;
+    }
+   
+    #ff-friends {
+         display:none;
+    }
+
+    a.filter {
+       position:relative;
+       top:-100px;
+    }
+   
+}
