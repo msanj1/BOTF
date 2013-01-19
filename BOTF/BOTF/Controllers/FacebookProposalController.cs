@@ -16,7 +16,7 @@ using DotNetOpenAuth.AspNet;
 /*This controller takes care of the facebook proposals posts*/
 namespace BOTF.Controllers
 {
-   [InitializeSimpleMembership]
+ 
     
     public class FacebookProposalController : ApiController
     {

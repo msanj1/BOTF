@@ -17,9 +17,12 @@ namespace BOTF.Migrations
        
         protected override void Seed(BOTF.Infrastructure.ContextDb context)
         {
+            if (!WebSecurity.Initialized)
+            {
+                 WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", true);
+            }
+          
 
-            //WebSecurity.InitializeDatabaseConnection("DefaultConnection",
-            //"UserProfile", "UserId", "UserName", autoCreateTables: true);
             /*Create an admin user the first tip code migration is run*/
             var roles = (SimpleRoleProvider)Roles.Provider;
             var membership = (SimpleMembershipProvider)Membership.Provider;
@@ -38,18 +41,7 @@ namespace BOTF.Migrations
             {
                 roles.AddUsersToRoles(new[] { "admin" }, new[] { "Admin" });
             }
-            //  This method will be called after migrating to the latest version.
-
-            //  You can use the DbSet<T>.AddOrUpdate() helper extension method 
-            //  to avoid creating duplicate seed data. E.g.
-            //
-            //    context.People.AddOrUpdate(
-            //      p => p.FullName,
-            //      new Person { FullName = "Andrew Peters" },
-            //      new Person { FullName = "Brice Lambson" },
-            //      new Person { FullName = "Rowan Miller" }
-            //    );
-            //
+          
         }
     }
 }

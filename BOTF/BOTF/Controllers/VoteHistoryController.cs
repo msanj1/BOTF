@@ -13,7 +13,7 @@ using BOTF.Filters;
 /*All the vote/proposal histories are done here*/
 namespace BOTF.Controllers
 {
-     [InitializeSimpleMembership]
+
     public class VoteHistoryController : ApiController
     {
          ContextDb _db = new ContextDb();

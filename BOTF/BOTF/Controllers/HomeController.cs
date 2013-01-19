@@ -12,7 +12,7 @@ using BOTF.Infrastructure;
 using Microsoft.Web.WebPages.OAuth;
 namespace BOTF.Controllers
 {
-    [InitializeSimpleMembership]
+ 
     public class HomeController : Controller
     {
         DatabaseCallsApi api = new DatabaseCallsApi();

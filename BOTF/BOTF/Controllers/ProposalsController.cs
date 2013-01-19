@@ -14,7 +14,7 @@ using System.Data.Spatial;
 /*This controller takes care of the propopsals functionality*/
 namespace BOTF.Controllers
 {
-   [InitializeSimpleMembership]
+  
     public class ProposalsController : ApiController
     {
         ContextDb _db = new ContextDb();

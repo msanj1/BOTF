@@ -336,6 +336,8 @@
     <None Include="Properties\PublishProfiles\Botf - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\btf - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\btf - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\btfprt - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\btfprt - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\boostrap-typeahead.js" />
     <Content Include="Scripts\bootstrap.js" />

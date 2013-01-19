@@ -19,9 +19,10 @@ namespace BOTF
       
         protected void Application_Start()
         {
-         
+            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", true);
             AreaRegistration.RegisterAllAreas();
-            //WebSecurity.InitializeDatabaseConnection("DefaultConnection","UserProfile","UserId","Username",true);
+           
+
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

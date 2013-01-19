@@ -129,5 +129,4 @@ C:\Users\mohsen\Desktop\BOTF\BOTF\obj\Debug\BOTF.dll
 C:\Users\mohsen\Desktop\BOTF\BOTF\obj\Debug\BOTF.pdb
 C:\Users\mohsen\Desktop\BOTF\BOTF\bin\SignalR.Hosting.AspNet.dll
 C:\Users\mohsen\Desktop\BOTF\BOTF\bin\SignalR.Hosting.AspNet.xml
-C:\Users\mohsen\Desktop\BOTF\BOTF\obj\Debug\BOTF.csprojResolveAssemblyReference.cache
 C:\Users\mohsen\Desktop\BOTF\BOTF\bin\Microsoft.SqlServer.Types.dll

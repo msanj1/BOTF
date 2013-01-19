@@ -25,13 +25,13 @@ namespace BOTF
             Settings.Settings.TwitterConsumerSecret = "uKr3F9GKjNkBGuE7DCbZvR4xcRcsPPU1ibLpPg0U";
 
             /*Facebook Configuration*/
-            Settings.Settings.FacebookAppId = "413005845422605";
-            Settings.Settings.FacebookAppSecret = "f8afed946bc4c981cc70908f4c9a1a56";
+            Settings.Settings.FacebookAppId = "499187306800509";
+            Settings.Settings.FacebookAppSecret = "a1dfe19ee3d9f05f48f36b88522c0eda";
             
 
             /*Facebook/Twitter callback Configuration*/
-            Settings.Settings.TwitterCallbackURL = "http://btf.azurewebsites.net/Account/TwitterCallback";
-            Settings.Settings.FacebookCallbackURL = "http://btf.azurewebsites.net/Account/FBAuth";
+            Settings.Settings.TwitterCallbackURL = "http://btfprt.azurewebsites.net/Account/TwitterCallback";
+            Settings.Settings.FacebookCallbackURL = "http://btfprt.azurewebsites.net/Account/FBAuth";
 
             /*LastFM Configuration*/
             Settings.Settings.LastFMKey = "637768bd3e08f631449bea2f1e28bf72";

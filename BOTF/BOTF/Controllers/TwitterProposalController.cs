@@ -22,7 +22,7 @@ namespace BOTF.Controllers
         // GET api/twitterproposal
 
         [Authorize]
-        [InitializeSimpleMembership]
+       
         //this function either returns the list of friends not using botf or just return a list of twitter freinds who have a local account
         public List<Models.User> Get(bool invite = false)
         {

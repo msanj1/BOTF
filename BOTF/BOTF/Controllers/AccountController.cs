@@ -19,7 +19,7 @@ using TweetSharp;
 namespace BOTF.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
+  
     public class AccountController : Controller
     {
         //tweetsharp setup

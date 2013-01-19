@@ -11,7 +11,7 @@ using System.IO;
 /*This controller takes care of the Dashboard section of the website*/
 namespace BOTF.Controllers
 {
-    [InitializeSimpleMembership]
+   
     [Authorize(Roles="Admin")]
     public class ManagementController : Controller
     {
