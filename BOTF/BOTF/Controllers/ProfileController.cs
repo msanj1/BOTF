@@ -24,11 +24,22 @@ namespace BOTF.Controllers
             if (user != null)
             {
                 string name = _usr.UserProfiles.FirstOrDefault(c => c.UserId == user.UserId).UserName;
-
+              
                 ViewBag.username = name;
                 return View(user);
             }
             return RedirectToAction("Index", "Home");
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+                
+            }
+          
+            base.Dispose(disposing);
         }
 
     }

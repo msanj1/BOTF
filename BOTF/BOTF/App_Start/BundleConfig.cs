@@ -19,13 +19,13 @@ namespace BOTF
                         "~/Scripts/jquery.validate*"));
 
             bundles.Add(new ScriptBundle("~/bundles/btf").Include(
-                    "~/Scripts/jquery.unobtrusive*",
-                    "~/Scripts/jquery.validate*",
-                    "~/Scripts/jquery-ui-{version}.js",
-                    "~/Scripts/jquery-{version}.js",
-                    "~/Scripts/Facebook.js",
+                   
                     
-                    "~/Scripts/handlebars.js"
+                  
+                    "~/Scripts/handlebars.js",
+                    "~/Scripts/Facebook.js"
+                    
+                    
 
                 ));
 

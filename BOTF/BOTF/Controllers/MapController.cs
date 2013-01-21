@@ -24,7 +24,7 @@ namespace BOTF.Controllers
         {
 
             List<VotersMapCoordinates> output = new List<VotersMapCoordinates>();
-            var histories = _db.VoteHistory.Where(c => c.ProposalId == id).ToList();
+            var histories = _db.VoteHistory.Where(c => c.ProposalId == id).ToList();    
             foreach (var history in histories)
             {
                 if (history.Coordinates != null)
@@ -51,6 +51,16 @@ namespace BOTF.Controllers
         // DELETE api/map/5
         public void Delete(int id)
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

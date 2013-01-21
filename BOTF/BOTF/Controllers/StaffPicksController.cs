@@ -7,6 +7,7 @@ using System.Web.Http;
 using BOTF.Models;
 using BOTF.Infrastructure;
 using BOTF.ModelView;
+using System.Web.Mvc;
 /*controller for the staff picks section*/
 namespace BOTF.Controllers
 {
@@ -15,6 +16,8 @@ namespace BOTF.Controllers
         ContextDb _db = new ContextDb();
         // GET api/staffpicks
         //function that returns all the staff picks
+
+        [OutputCache(Duration=300)]
         public List<ViewProposals> Get([FromUri]string Filter = null)
         {
             List<ViewProposals> proposals = new List<ViewProposals>();
@@ -48,6 +51,7 @@ namespace BOTF.Controllers
 
         // GET api/staffpicks/5
         //same function but with a count variable
+         [OutputCache(Duration = 300)]
         public List<ViewProposals> Get([FromUri]int count, [FromUri]int skip, [FromUri]string Filter)
         {
             List<ViewProposals> output = new List<ViewProposals>();
@@ -122,6 +126,16 @@ namespace BOTF.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

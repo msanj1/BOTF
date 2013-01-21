@@ -82,7 +82,7 @@ namespace BOTF.Controllers
         }
 
         /*A function that creates a new Code and registers in the database*/
-        [InitializeSimpleMembership]
+     
         public JsonResult GenerateCode() {
          
             string Key = "";
@@ -117,6 +117,16 @@ namespace BOTF.Controllers
          
          
            return Json(Key, JsonRequestBehavior.AllowGet);
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
 

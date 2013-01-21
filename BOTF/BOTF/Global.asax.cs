@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -9,6 +10,7 @@ using System.Web.Routing;
 using System.Web.Security;
 using System.Web.SessionState;
 using WebMatrix.WebData;
+using BOTF.Models;
 namespace BOTF
 {
     // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
@@ -19,7 +21,13 @@ namespace BOTF
       
         protected void Application_Start()
         {
-            WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", true);
+            Database.SetInitializer<UsersContext>(null); //handle the manual creation of the database
+
+            if (!WebSecurity.Initialized)
+            {
+                WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "Username", true);
+
+            }
             AreaRegistration.RegisterAllAreas();
            
 

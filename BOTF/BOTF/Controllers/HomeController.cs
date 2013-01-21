@@ -68,8 +68,9 @@ namespace BOTF.Controllers
 
 
                 }
+                _db.Dispose();
             }
-         
+            
             return RedirectToAction("Index");
 
         }
@@ -107,6 +108,7 @@ namespace BOTF.Controllers
         public JsonResult GetGenres() {
             ContextDb _db = new ContextDb();
             List<string> Genres =  _db.Proposal.Select(c => c.Genre).Distinct().ToList();
+            _db.Dispose();
             return Json(Genres,JsonRequestBehavior.AllowGet);
         }
 

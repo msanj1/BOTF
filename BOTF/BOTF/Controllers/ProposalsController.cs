@@ -11,6 +11,8 @@ using System.Threading;
 using WebMatrix.WebData;
 using BOTF.Filters;
 using System.Data.Spatial;
+
+
 /*This controller takes care of the propopsals functionality*/
 namespace BOTF.Controllers
 {
@@ -59,6 +61,8 @@ namespace BOTF.Controllers
             return voters;
         }
 
+
+     
        public List<Proposal> Get([FromUri]string latitude, [FromUri]string longitude)
        {
             string point = String.Format("POINT({0} {1})", longitude, latitude);
@@ -72,6 +76,8 @@ namespace BOTF.Controllers
 
        /*This function is used to display the top12 and the rest part of the homepage*/
         // GET api/proposal/5
+
+
        public List<ViewProposals> Get([FromUri]int count, [FromUri]int skip, [FromUri]string Filter, [FromUri]bool State)
         {
           
@@ -238,6 +244,16 @@ namespace BOTF.Controllers
         // DELETE api/proposal/5
         public void Delete(int id)
         {
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

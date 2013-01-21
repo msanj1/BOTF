@@ -8,11 +8,15 @@ using BOTF.Models;
 using BOTF.Infrastructure;
 using BOTF.ModelView;
 using System.IO;
+using System.Web.Mvc;
 /*controller for the slider*/
 namespace BOTF.Controllers
 {
+    [OutputCache(Duration = 300)]
     public class SliderController : ApiController
     {
+
+     
         ContextDb _db = new ContextDb();
         // GET api/slider
         //get slider contents
@@ -113,6 +117,17 @@ namespace BOTF.Controllers
 
             
             
+        }
+
+
+        protected override void Dispose(bool disposing)
+        {
+            if (_db != null)
+            {
+                _db.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
     }
 }

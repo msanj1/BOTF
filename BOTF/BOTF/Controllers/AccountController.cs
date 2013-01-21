@@ -101,6 +101,7 @@ namespace BOTF.Controllers
                 _db.SaveChanges();
                 Session.Remove("state");
             }
+           _db.Dispose();
             
 
         }
